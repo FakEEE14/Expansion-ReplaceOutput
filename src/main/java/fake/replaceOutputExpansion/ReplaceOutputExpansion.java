@@ -18,7 +18,7 @@ import java.util.*;
 public final class ReplaceOutputExpansion extends PlaceholderExpansion implements Cacheable, Configurable {
 
     @Override
-    public @NotNull String getIdentifier() {return "gcro";}
+    public @NotNull String getIdentifier() {return "replaceoutput";}
     @Override
     public @NotNull String getAuthor() {return "FakEE7";}
     @Override
