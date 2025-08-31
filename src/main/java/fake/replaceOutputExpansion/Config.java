@@ -27,12 +27,14 @@ public class Config {
         }
         this.config = YamlConfiguration.loadConfiguration(this.file);
         this.config.options().header(
-                "OutputReplace Configuration - All Condition Types\n" +
+                "ReplaceOutput Configuration - All Condition Types\n" +
                         "\n" +
                         "PLACEHOLDER: Start with { and End with }\n" +
+                        " example:\n" +
+                        "  {player_name}\n" +
                         "NEGATE: Put ! first of the Condition\n" +
-                        "NEW SYNTAX: conditionType::value\n" +
-                        "\n" +
+                        " example:\n" +
+                        "  !equalsignorecase\n" +
                         "Available condition types:\n" +
                         "\n" +
                         "RANGE CONDITIONS:\n" +
