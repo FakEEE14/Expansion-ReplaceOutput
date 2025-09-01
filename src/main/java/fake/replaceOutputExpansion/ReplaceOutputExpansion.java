@@ -18,7 +18,7 @@ import java.util.*;
 public final class ReplaceOutputExpansion extends PlaceholderExpansion implements Cacheable, Configurable {
 
     @Override
-    public @NotNull String getIdentifier() {return "replaceoutput";}
+    public @NotNull String getIdentifier() {return "gcro";}
     @Override
     public @NotNull String getAuthor() {return "FakEE7";}
     @Override
@@ -137,6 +137,8 @@ public final class ReplaceOutputExpansion extends PlaceholderExpansion implement
             }
 
             switch (conditionType.toLowerCase()) {
+//                case "js":
+//                    return evalJs(conditionValue, value, negated);
 
                 case "~~":
                 case "range":
@@ -232,6 +234,22 @@ public final class ReplaceOutputExpansion extends PlaceholderExpansion implement
         return identifier;
 //        return this.provider.onPlaceholderRequest(null, offlinePlayer.getUniqueId(), identifier);
     }
+//    private boolean evalJs(String script, String value, boolean negated) {
+//        try {
+//            ScriptEngine engine = new ScriptEngineManager().getEngineByName("JavaScript");
+//
+//            script = script.replace("%value%", "\"" + value + "\"");
+//
+//            Object evalResult = engine.eval(script);
+//            if (!(evalResult instanceof Boolean)) {return false;}
+//
+//            return negated != (Boolean) evalResult;
+//
+//        } catch (ScriptException e) {
+//            debug("Invalid JS condition: " + script + " error: " + e.getMessage());
+//            return false;
+//        }
+//    }
 
     private void debug(String message) {
         if (this.debug) {

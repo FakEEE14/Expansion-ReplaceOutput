@@ -58,6 +58,12 @@ public class Config {
                         " greaterthan::number, >=::number  - Greater than or equal\n" +
                         " lowerthan::number, <=::number    - Less than or equal\n" +
                         "\n" +
+//                        "JAVASCRIPT: \n" +
+//                        " JS::<evaluator>                  - JavaScript evaluator (use %value%)\n"+
+//                        "  examples:\n" +
+//                        "   js::%value%.equals('hi') || %value%.equals('hello'):\n" +
+//                        "   js::0 <= %value% && %value% <= 100\n" +
+//                        "\n" +
                         "ELSE:\n" +
                         " else                             - Anything else"
         );
@@ -81,12 +87,6 @@ public class Config {
             this.config.set(replacementsPath + ".my-shop-placeholder.~~::1~100", "Positive");
             this.config.set(replacementsPath + ".my-shop-placeholder.<::{placeholder-for-price}", "No Money");
             this.config.set(replacementsPath + ".my-shop-placeholder.else", "NAN");
-
-            this.config.set(replacementsPath + ".my-shop-javascript.js::-100 <= %value% && %value% <= -1", "Negative");
-            this.config.set(replacementsPath + ".my-shop-javascript.0", "Zero");
-            this.config.set(replacementsPath + ".my-shop-javascript.js::1 <= %value% && %value% <= 100", "Positive");
-            this.config.set(replacementsPath + ".my-shop-javascript.js::%value%<{placeholder-for-price}", "No Money");
-            this.config.set(replacementsPath + ".my-shop-javascript.else", "NAN");
 
             this.config.set(replacementsPath + ".my-placeholder.empty", "");
             this.config.set(replacementsPath + ".my-placeholder.else", "[{my_placeholder}] ");
