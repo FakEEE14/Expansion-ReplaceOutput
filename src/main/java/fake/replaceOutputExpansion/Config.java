@@ -58,12 +58,6 @@ public class Config {
                         " greaterthan::number, >=::number  - Greater than or equal\n" +
                         " lowerthan::number, <=::number    - Less than or equal\n" +
                         "\n" +
-                        "JAVASCRIPT:\n" +
-                        " JS::<evaluator>                  - JavaScript evaluator (use %value%)\n"+
-                        "  examples:\n" +
-                        "   js::%value%.equals('hi') || %value%.equals('hello'):\n" +
-                        "   js::0 <= %value% && %value% <= 100\n" +
-                        "\n" +
                         "ELSE:\n" +
                         " else                             - Anything else"
         );
