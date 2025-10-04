@@ -1,1 +1,1 @@
-WIKI IN CONFIG
+# Examples IN CONFIG
