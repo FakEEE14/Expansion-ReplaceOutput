@@ -10,7 +10,13 @@ import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.*;
+//import javax.script.ScriptEngine;
+//import javax.script.ScriptEngineManager;
+//import javax.script.ScriptException;
+
+import java.util.Map;
+import java.util.HashMap;
+import java.util.LinkedHashMap;
 
 public final class ReplaceOutputExpansion extends PlaceholderExpansion implements Cacheable, Configurable {
 
@@ -22,8 +28,6 @@ public final class ReplaceOutputExpansion extends PlaceholderExpansion implement
     public @NotNull String getVersion() {return "1.0";}
     @Override
     public Map<String, Object> getDefaults() {return Map.of();}
-    @Override
-    public boolean canRegister() {return true;}
 
     @Override
     public void clear() {
@@ -36,9 +40,6 @@ public final class ReplaceOutputExpansion extends PlaceholderExpansion implement
 
     @Override
     public boolean register() {
-        if (!canRegister()) {
-            return false;
-        }
         FileConfiguration config = new Config(this).load();
 
         ConfigurationSection settings = config.getConfigurationSection("Settings");
@@ -79,20 +80,15 @@ public final class ReplaceOutputExpansion extends PlaceholderExpansion implement
         String placeholderName = parts[0];
         String value = parts[1];
 
-        if (this.replacements.get(placeholderName) == null) {
-            debug("Unknown placeholder: " + placeholderName);
-            return value;
-        }
-
         Map<String, String> placeholderConfig = this.replacements.get(placeholderName);
         if (placeholderConfig == null) {
             debug("No configuration found for placeholder: " + placeholderName);
             return value;
         }
 
-        String result = processReplacement(player ,placeholderConfig, value);
+        String result = processReplacement(player, placeholderConfig, value).replace("%value%", value);
         debug("Processed " + placeholderName + " with value '" + value + "' -> '" + result + "'");
-        return processNestedPlaceholders(player,result);
+        return processNestedPlaceholders(player, result);
     }
 
     private String processReplacement(OfflinePlayer player,Map<String, String> config, String value) {
@@ -126,30 +122,29 @@ public final class ReplaceOutputExpansion extends PlaceholderExpansion implement
         try {
             String[] parts = condition.split("::", 2);
             String conditionType = parts[0].toLowerCase();
-            String conditionValue = parts.length > 1 ? parts[1] : "";
+            String baseConditionValue = parts.length > 1 ? parts[1] : "";
+            String conditionValue = baseConditionValue.replace("%value%", value);
 
             boolean negated = conditionType.startsWith("!");
-            if (negated) {
-                conditionType = conditionType.substring(1);
-            }
+            if (negated) conditionType = conditionType.substring(1);
 
             switch (conditionType.toLowerCase()) {
 //                case "js":
-//                    return evalJs(conditionValue, value, negated);
+//                    String jsValue = baseConditionValue.replace("%value%", "\"" + value + "\"");
+//                    return negated != evalJs(jsValue);
 
                 case "~~":
                 case "range":
                     String[] rangeParts = conditionValue.split("~", 2);
-                    if (rangeParts.length == 2) {
-                        double numValue = Double.parseDouble(value);
-                        double first = Double.parseDouble(rangeParts[0]);
-                        double second = Double.parseDouble(rangeParts[1]);
-                        double min = Math.min(first, second);
-                        double max = Math.max(first, second);
-                        boolean inRange = min <= numValue && numValue <= max;
-                        return negated != inRange;
-                    }
-                    return false;
+                    if (rangeParts.length != 2) { return false; }
+
+                    double numValue = Double.parseDouble(value);
+                    double first = Double.parseDouble(rangeParts[0]);
+                    double second = Double.parseDouble(rangeParts[1]);
+                    double min = Math.min(first, second);
+                    double max = Math.max(first, second);
+                    boolean inRange = min <= numValue && numValue <= max;
+                    return negated != inRange;
 
                 case "==":
                 case "equals":
@@ -231,17 +226,13 @@ public final class ReplaceOutputExpansion extends PlaceholderExpansion implement
         return identifier;
 //        return this.provider.onPlaceholderRequest(null, offlinePlayer.getUniqueId(), identifier);
     }
-//    private boolean evalJs(String script, String value, boolean negated) {
+//    private boolean evalJs(String script) {
 //        try {
 //            ScriptEngine engine = new ScriptEngineManager().getEngineByName("JavaScript");
-//
-//            script = script.replace("%value%", "\"" + value + "\"");
-//
 //            Object evalResult = engine.eval(script);
 //            if (!(evalResult instanceof Boolean)) {return false;}
 //
-//            return negated != (Boolean) evalResult;
-//
+//            return (Boolean) evalResult;
 //        } catch (ScriptException e) {
 //            debug("Invalid JS condition: " + script + " error: " + e.getMessage());
 //            return false;

@@ -27,14 +27,29 @@ public class Config {
         }
         this.config = YamlConfiguration.loadConfiguration(this.file);
         this.config.options().header(
-                "ReplaceOutput Configuration - All Condition Types\n" +
+                  "ReplaceOutput Configuration\n" +
                         "\n" +
-                        "PLACEHOLDER: Start with { and End with }\n" +
+                        "How to use the placeholder:\n" +
+                        "  %replaceoutput_replacement_value%\n" +
+                        "   replacement: Config you Want\n" +
+                        "   value: value you want to \n" +
+                        "\n" +
+                        "NOTE: Do not put underline in the replacements\n" +
+                        " wrong  : my_placeholder\n" +
+                        " correct: my-placeholder\n" +
+                        "\n" +
+                        "VARIABLES: Internal placeholders\n" +
+                        " %value%: Return the value you inserted\n" +
+                        "\n" +
+                        "PLACEHOLDERS: Start with { and End with }\n" +
                         " example:\n" +
                         "  {player_name}\n" +
-                        "NEGATE: Put ! first of the Condition\n" +
+                        "\n" +
+                        "NEGATE: Put ! Before the Condition\n" +
                         " example:\n" +
                         "  !equalsignorecase\n" +
+                        "\n" +
+                        "\n" +
                         "Available condition types:\n" +
                         "\n" +
                         "RANGE CONDITIONS:\n" +
