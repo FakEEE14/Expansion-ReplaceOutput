@@ -91,11 +91,11 @@ public class Config {
         String replacementsPath = "Replacements";
         if (!this.config.isConfigurationSection(replacementsPath)) {
 
-            this.config.set(replacementsPath + ".ping.~~::0~50", "&a%ping%");
-            this.config.set(replacementsPath + ".ping.~~::51~100", "&e%ping%");
-            this.config.set(replacementsPath + ".ping.~~::101~200", "&6%ping%");
-            this.config.set(replacementsPath + ".ping.>::200", "&c%ping%");
-            this.config.set(replacementsPath + ".ping.else", "&4%ping%");
+            this.config.set(replacementsPath + ".ping.~~::0~50", "&a{player_ping}");
+            this.config.set(replacementsPath + ".ping.~~::51~100", "&e{player_ping}");
+            this.config.set(replacementsPath + ".ping.~~::101~200", "&6{player_ping}");
+            this.config.set(replacementsPath + ".ping.>::200", "&c{player_ping}");
+            this.config.set(replacementsPath + ".ping.else", "&4{player_ping}");
 
             this.config.set(replacementsPath + ".my-shop-placeholder.~~::-100~-1", "Negative");
             this.config.set(replacementsPath + ".my-shop-placeholder.0", "Zero");
@@ -123,6 +123,22 @@ public class Config {
             this.config.set(replacementsPath + ".online.true", "&aOnline");
             this.config.set(replacementsPath + ".online.!equals::true", "&cOffline");
             this.config.set(replacementsPath + ".online.else", "&7Unknown");
+
+            this.config.set(replacementsPath + ".format.>=::1000000000000000000000000", "{math_0:floor_%value%/1000000000000000000000000}S");
+            this.config.set(replacementsPath + ".format.>=::1000000000000000000000", "{math_0:floor_%value%/1000000000000000000000}s");
+            this.config.set(replacementsPath + ".format.>=::1000000000000000000", "{math_0:floor_%value%/1000000000000000000}Q");
+            this.config.set(replacementsPath + ".format.>=::1000000000000000", "{math_0:floor_%value%/1000000000000000}q");
+            this.config.set(replacementsPath + ".format.>=::1000000000000", "{math_0:floor_%value%/1000000000000}t");
+            this.config.set(replacementsPath + ".format.>=::1000000000", "{math_0:floor_%value%/1000000000}b");
+            this.config.set(replacementsPath + ".format.>=::1000000", "{math_0:floor_%value%/1000000}m");
+            this.config.set(replacementsPath + ".format.>=::1000", "{math_0:floor_%value%/1000}k");
+            this.config.set(replacementsPath + ".else", "%value%");
+
+//            this.config.set(replacementsPath + ".my-shop-javascript.js::-100 <= %value% && %value% <= -1", "Negative");
+//            this.config.set(replacementsPath + ".my-shop-javascript.0", "Zero");
+//            this.config.set(replacementsPath + ".my-shop-javascript.js::1 <= %value% && %value% <= 100", "Positive");
+//            this.config.set(replacementsPath + ".my-shop-javascript.js::%value%<{placeholder-for-price}", "No Money");
+//            this.config.set(replacementsPath + ".my-shop-javascript.else", "NAN");
         }
 
         save();

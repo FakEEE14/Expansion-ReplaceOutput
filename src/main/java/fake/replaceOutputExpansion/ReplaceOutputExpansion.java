@@ -14,6 +14,8 @@ import org.jetbrains.annotations.NotNull;
 //import javax.script.ScriptEngineManager;
 //import javax.script.ScriptException;
 
+import javax.annotation.Nonnull;
+import java.util.List;
 import java.util.Map;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
@@ -21,13 +23,23 @@ import java.util.LinkedHashMap;
 public final class ReplaceOutputExpansion extends PlaceholderExpansion implements Cacheable, Configurable {
 
     @Override
-    public @NotNull String getIdentifier() {return "replaceoutput";}
+    public @NotNull String getIdentifier() {return "ReplaceOutput";}
     @Override
     public @NotNull String getAuthor() {return "FakEE7";}
     @Override
     public @NotNull String getVersion() {return "1.0";}
     @Override
     public Map<String, Object> getDefaults() {return Map.of();}
+
+    @Override
+    public @Nonnull List<String> getPlaceholders() {
+        List<String> result = new java.util.ArrayList<>();
+        for (Map.Entry<String, Map<String, String>> entry : replacements.entrySet()) {
+            String placeholderName = entry.getKey();
+            result.add("%replaceoutput_"+placeholderName + "_<value>%");
+        }
+        return result;
+    }
 
     @Override
     public void clear() {
